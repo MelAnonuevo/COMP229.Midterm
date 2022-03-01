@@ -1,3 +1,8 @@
+// Filename: COMP229002-W2022-Midterm-301167069
+// Author: Mel Vincent Anonuevo
+// Student ID: 301167069
+// WebApp Name: Favorite Movie List
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -6,7 +11,7 @@ var logger = require('morgan');
 
 //Database setup
 let mongoose = require('mongoose');
-let dbURI = require('./db');
+let dbURI = require('../config/db');
 
 // Connect to the Database
 mongoose.connect(dbURI.AtlasDB);
@@ -30,7 +35,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../assets')));
 app.use(express.static(path.join(__dirname, '../node_modules')));
 
 app.use('/', indexRouter);

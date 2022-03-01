@@ -1,3 +1,8 @@
+// Filename: COMP229002-W2022-Midterm-301167069
+// Author: Mel Vincent Anonuevo
+// Student ID: 301167069
+// WebApp Name: Favorite Movie List
+
 // create a reference to the model
 let Movie = require('../models/movie');
 
@@ -44,7 +49,15 @@ module.exports.details = (req, res, next) => {
 // Renders the Add form using the add_edit.ejs template
 module.exports.displayAddPage = (req, res, next) => {
     
-    // ADD YOUR CODE HERE        
+    // ADD YOUR CODE HERE    
+    
+    let newMovie = Movie();
+
+    //rendering the add_edit page
+    res.render('movie/add_edit', {
+        title: 'Add new Movie',
+        item: newMovie,
+    })
 
 }
 
@@ -52,6 +65,30 @@ module.exports.displayAddPage = (req, res, next) => {
 module.exports.processAddPage = (req, res, next) => {
 
     // ADD YOUR CODE HERE
+    //Movie Database Schema
+    let newMovie = Movie({
+        _id: req.body.id,
+        Title: req.body.Title,
+        Synopsis: req.body.Synopsis,
+        Year: req.body.Year,
+        Director: req.body.Director,
+        Genre: req.body.Genre
+		
+    });
+
+    Movie.create(newMovie, (err, item) =>{
+        if(err)
+        {
+            console.log(err);
+            res.end(err);
+        }
+        else
+        {
+            //refresh the movie list
+            console.log(item);
+            res.redirect('/movie/list');
+        }
+    });
 
 }
 
@@ -59,6 +96,23 @@ module.exports.processAddPage = (req, res, next) => {
 module.exports.displayEditPage = (req, res, next) => {
     
     // ADD YOUR CODE HERE
+    let id = req.params.id;
+
+    Movie.findById(id, (err, itemToEdit) => {
+        if(err)
+        {
+            console.log(err)
+            res.end(err);
+        }
+        else
+        {
+            //show the edit view
+            res.render('movie/add_edit', {
+                title: 'Edit Movie',
+                item: itemToEdit
+            })
+        }
+    });
 
 }
 
@@ -66,6 +120,31 @@ module.exports.displayEditPage = (req, res, next) => {
 module.exports.processEditPage = (req, res, next) => {
     
     // ADD YOUR CODE HERE
+    let id = req.params.id
+    
+    //Update Movie Database Schema
+    let updatedItem = Movie({
+        _id: req.body.id,
+        Title: req.body.Title,
+        Synopsis: req.body.Synopsis,
+        Year: req.body.Year,
+        Director: req.body.Director,
+        Genre: req.body.Genre
+		
+    });
+
+    Movie.updateOne({_id: id}, updatedItem, (err) => {
+        if(err)
+        {
+            console.log(err);
+            res.end(err);
+        }
+        else
+        {
+            //refresh the movie list
+            res.redirect('/movie/list');
+        }
+    });
     
 }
 
@@ -73,5 +152,21 @@ module.exports.processEditPage = (req, res, next) => {
 module.exports.performDelete = (req, res, next) => {
     
     // ADD YOUR CODE HERE
+
+    let id = req.params.id
+
+    //Removing item by id
+    Movie.remove({_id : id}, (err) => {
+        if (err)
+        {
+            console.log(err);
+            res.end(err);
+        }
+        else
+        {
+            //refresh the movie list
+            res.redirect('/movie/list');
+        }
+    });
 
 }

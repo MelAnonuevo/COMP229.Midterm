@@ -1,3 +1,8 @@
+<!-- Filename: COMP229002-W2022-Midterm-301167069
+Author: Mel Vincent Anonuevo
+Student ID: 301167069
+WebApp Name: Favorite Movie List -->
+
 <%- include ../partials/header.ejs %>
 
   <!-- Main Content -->
@@ -9,7 +14,7 @@
             <!-- ------------------------ -->
             <!-- Fix the ADD button below -->
             <!-- ------------------------ -->
-            <a href="#" class="btn btn-primary align-self-end" role="button">
+            <a href="/movie/add" class="btn btn-primary align-self-end" role="button">
                 <i class="fas fa-plus-circle"></i> 
                 Add a new Item
             </a>                
@@ -32,7 +37,7 @@
                 <% for(let count = 0; count < movies.length; count++) { %>
                     <tr>
                         <td class="text-center">
-                            <a href="/movie/details/<%= movies[count]._id %>">
+                            <!-- <a href="/movie/details/<%= movies[count]._id %>"> -->
                                 <%= movies[count].Title %>
                             </a>
                         </td>
@@ -45,14 +50,14 @@
                             <!-- ------------------------- -->
                             <!-- Fix the EDIT button below -->
                             <!-- ------------------------ -->
-                            <a href="#" class="btn btn-primary btn-sm">
+                            <a href="/movie/edit/<%= movies[count]._id %>" class="btn btn-primary btn-sm">
                             <i class="fas fa-pencil-alt"></i></a>
                         </td>
                         <td class="text-center">
                             <!-- --------------------------- -->
                             <!-- Fix the DELETE button below -->
                             <!-- --------------------------- -->
-                            <a href="#" class="btn btn-danger btn-sm">
+                            <a href="/movie/delete/<%= movies[count]._id %>" class="btn btn-danger btn-sm">
                             <i class="fas fa-trash-alt"></i></a>
                         </td>
                     </tr>
